@@ -1,10 +1,39 @@
 import org.openpatch.scratch.KeyCode;
 import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
+import org.openpatch.scratch.extensions.math.Vector2;
 
 class Player extends Sprite {
 
     public static String path = "sprites/Player/";
+
+    public static Player Instance;
+
+
+    public int exp;
+    public int hp;
+    public int maxHp;
+    public int level;
+    public int magnetRange;
+    public Vector2 pos;
+
+    public double speed;
+
+    //이동
+    public double inputX;
+    public double inputY;
+
+    //애니메이션
+    public String anim;
+    public int frameCount;
+    public int frameDelay;
+
+    public int frame;
+    public int frameTimer;
+
+    //피격
+    public static final int INVINCIBLE_TIME = 2;
+    public int damageTimer;
 
     Player() {
         GameManager.AddCostumes(this, path, "Idle", 2);
@@ -12,29 +41,91 @@ class Player extends Sprite {
 
         this.setOnEdgeBounce(true);
         this.setDirection(0);
+    }
 
-        //Initialize
+    @Override
+    public void whenAddedToStage() {
+        super.whenAddedToStage();
         Initialize();
     }
 
     private void Initialize(){
         this.setRotationStyle(RotationStyle.LEFT_RIGHT);
         this.setSize(150);
-        //this.move(new Vector2(0, 0));
 
         frame = 1;
-    }
 
-    public void whenKeyPressed(int keyCode) {
-        if (keyCode == KeyCode.VK_SPACE) {
-            //예시 키 입력 스페이스바
-        }
-    }
+        move(new Vector2(0, 0));
 
-    public int frame;
+        speed = 50;
+        hp = 20;
+        maxHp = 20;
+        exp = 0;
+        level = 1;
+        magnetRange = 15;
+
+        Instance = this;
+    }
 
     //매 프레임마다 실행됨 (60프레임), 기존 코드 DeltaTime 사이클 대체
     public void run() {
-        this.switchCostume("Idle" + (int)(frame / 32f));
+        if (GameManager.isGamePaused) return;
+
+        move();
+        animation();
+        cooldown();
+    }
+
+
+    public void move(){
+        inputX = 0.0; inputY = 0.0;
+        if(isKeyPressed(KeyCode.VK_D)) inputX += 1.0;
+        if(isKeyPressed(KeyCode.VK_A)) inputX += -1.0;
+        if(isKeyPressed(KeyCode.VK_W)) inputY += 1.0;
+        if(isKeyPressed(KeyCode.VK_S)) inputY += -1.0;
+
+
+        double scalar = Math.sqrt(inputX * inputX + inputY * inputY);
+        if(scalar == 0) scalar = 0.1;
+
+        double dirX = inputX / scalar;
+        double dirY = inputY / scalar;
+
+        changePosition(new Vector2(dirX * speed * 0.016, dirY * speed * 0.016));
+        pos = getPosition();
+
+        if(scalar > 0.9) playAnim("Run", 8, 5);
+        else playAnim("Idle", 2, 20);
+
+        if(dirX > 0) pointInDirection(90);
+        if(dirX < 0) pointInDirection(-90);
+    }
+
+    public void playAnim(String anim, int frameCount, int frameDelay){
+        if(this.anim == anim) return;
+
+        this.anim = anim;
+        this.frameCount = frameCount;
+        this.frameDelay = frameDelay;
+
+        this.frame = 1;
+        this.frameTimer = 0;
+    }
+
+    public void animation(){
+        frameTimer--;
+        if(frameTimer <= 0){
+            frameTimer = frameDelay;
+            if(frame < frameCount){
+                frame++;
+            }
+            else frame = 1;
+
+            switchCostume(anim+frame);
+        }
+    }
+
+    public void cooldown(){
+        damageTimer--;
     }
 }
