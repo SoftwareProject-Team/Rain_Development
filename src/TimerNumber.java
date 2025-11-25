@@ -12,35 +12,41 @@ public class TimerNumber extends Sprite {
             this.addCostume("number" + i, "sprites/Number/number" + i + ".png");
         }
         this.addCostume("colon", "sprites/Number/colon.png");
-
-        // 초기 위치 설정
-        initializePosition();
     }
 
-    private void initializePosition() {
+    public void whenAddedToStage() {
+        super.whenAddedToStage();
+        Initialize();
+    }
+
+    private void Initialize() {
         int yPos = 250; // Y 위치는 모든 문자가 동일 (화면 상단)
 
         if (timerPos == 0) {
-            this.setX(-40);
-            this.setY(yPos);
-        } else if (timerPos == 1) {
             this.setX(-20);
             this.setY(yPos);
+        } else if (timerPos == 1) {
+            this.setX(-10);
+            this.setY(yPos);
         } else if (timerPos == 2) { // 10초 단위
-            this.setX(20);
+            this.setX(10);
             this.setY(yPos);
         } else if (timerPos == 3) { // 1초 단위
-            this.setX(40);
+            this.setX(20);
             this.setY(yPos);
         } else if (timerPos == 4) { // 콜론(:), X축 정중앙 위치
             this.setX(0);
             this.setY(yPos);
             this.switchCostume("colon");
         }
+
+        setSize(300);
     }
 
     @Override
     public void run() {
+        if (GameManager.isGamePaused) return;
+
         // 콜론은 계산이 필요 없음
         if (timerPos == 4) return;
 
