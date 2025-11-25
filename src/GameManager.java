@@ -20,6 +20,12 @@ public class GameManager extends Stage {
         Sprite player = new Player();
         this.add(player);
 
+        // 타이머 숫자 5개 생성, 화면에 붙이기
+        for (int i = 0; i < 5; i++) {
+            TimerNumber t = new TimerNumber(i);
+            this.add(t);
+        }
+
     }
 
     public static void main(String[] args) {
