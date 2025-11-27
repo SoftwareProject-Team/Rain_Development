@@ -8,6 +8,9 @@ public class GameManager extends Stage {
     public static final ArrayList<ItemData> WEAPON_SLOT = new ArrayList<>();
     // 설명 이미지 설정
     public static final ArrayList<ItemData> SUPPORT_SLOT = new ArrayList<>();
+
+    private ArrayList<ItemSelectButton> buttons = new ArrayList<>();
+
     public static final int ITEMMAX = 5;
 
     ItemSlot itemSlot;
@@ -30,19 +33,9 @@ public class GameManager extends Stage {
             TimerNumber t = new TimerNumber(i);
             this.add(t);
         }
-        //this.add(new ItemSelectButton(0,0,"colon","sprites/Number/colon.png","sprites/Number/colon.png"));
-        //this.add(new ItemSelectButton(-250,0,"colon","sprites/Number/colon.png","sprites/Number/colon.png"));
-        //this.add(new ItemSelectButton(250,0,"colon","sprites/Number/colon.png","sprites/Number/colon.png"));
 
         itemSlot = new ItemSlot();
-        addItem(WEAPON_SLOT, "Weapon", "sprites/Number/colon.png");
-        addItem(WEAPON_SLOT, "Weapon", "sprites/Number/colon.png");
-        addItem(WEAPON_SLOT, "Weapon", "sprites/Number/number0.png");
-        addItem(WEAPON_SLOT, "Weapon", "sprites/Number/number0.png");
-        addItem(WEAPON_SLOT, "Weapon", "sprites/Number/number0.png");
-        addItem(SUPPORT_SLOT, "Support", "sprites/Number/colon.png");
         this.add(itemSlot);
-
     }
     public static void main(String[] args) {
         new GameManager();
@@ -66,6 +59,7 @@ public class GameManager extends Stage {
         }
 
     }
+
     private void spawnWave() {
         for (int i = 0; i < 4; i++)
         {
@@ -78,9 +72,19 @@ public class GameManager extends Stage {
         for (int i = 0; i < 2; i++) {
             this.add(new Enemy(Enemy.boar));
         }
+        this.add(new ItemSelectButton(0,0,"Weapon","colon","sprites/Number/colon.png","sprites/Number/colon.png"));
+        this.add(new ItemSelectButton(-250,0,"Weapon","colon","sprites/Number/colon.png","sprites/Number/colon.png"));
+        this.add(new ItemSelectButton(250,0,"Weapon","colon","sprites/Number/colon.png","sprites/Number/colon.png"));
+    }
+    public static void AddCostumes(Sprite spr, String path, String name, int range){
+        for (int i = 1; i <= range; i++) {
+            spr.addCostume(name + i, path + name + i + ".png");
+        }
+
 
     }
-    private void addItem(ArrayList<ItemData> slot, String type, String imgPath) {
+
+    public void addItem(ArrayList<ItemData> slot, String type, String imgPath) {
 
         // 이미 있는지 확인 → 있으면 레벨업
         for (ItemData data : slot) {
@@ -98,13 +102,16 @@ public class GameManager extends Stage {
         }
 
     }
+    public void registerButton(ItemSelectButton btn) {
+        buttons.add(btn);
+    }
 
-    public static void AddCostumes(Sprite spr, String path, String name, int range){
-        for (int i = 1; i <= range; i++) {
-            spr.addCostume(name + i, path + name + i + ".png");
+    public void hideOtherButtons() {
+        for (ItemSelectButton b : buttons)
+        {
+            b.remove();
         }
-
-
+        buttons.clear();
     }
 }
 

@@ -8,25 +8,30 @@ import javax.imageio.ImageIO;
 
 public class ItemSlot extends Sprite {
 
-    private final int SLOT_SIZE = 80;
-    private final int ICON_SIZE = 50;
+    private final int SLOT_SIZE = 50;
+    private final int ICON_SIZE = 30;
     private final int GAP = 10;
 
     public ItemSlot() {
-        this.setX(0);
-        this.setY(0);
+        this.setX(-250);
+        this.setY(200);
         refreshUI();
     }
 
     public void refreshUI() {
         BufferedImage buff = drawItemSlot();
+
+
         try {
-            String uniqueName = "ui_" + System.nanoTime();
-            File tempFile = File.createTempFile(uniqueName, ".png");
+            String fixedName = "ui_" + System.nanoTime();
+
+            File tempFile = File.createTempFile("temp_ui", ".png");
             ImageIO.write(buff, "png", tempFile);
 
-            this.addCostume(uniqueName, tempFile.getAbsolutePath());
-            this.switchCostume(uniqueName);
+            this.addCostume(fixedName, tempFile.getAbsolutePath());
+            this.switchCostume(fixedName); // 코스튬 변경
+
+            tempFile.deleteOnExit();
 
             tempFile.deleteOnExit();
         } catch (IOException e) {
@@ -36,7 +41,7 @@ public class ItemSlot extends Sprite {
 
     private BufferedImage drawItemSlot() {
         int w = (SLOT_SIZE + GAP) * GameManager.ITEMMAX + 20;
-        int h = (SLOT_SIZE * 2) + 40;
+        int h = (SLOT_SIZE * 2) + 60;
 
         BufferedImage buff = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = buff.createGraphics();
@@ -50,9 +55,7 @@ public class ItemSlot extends Sprite {
         for (int i = 0; i < GameManager.ITEMMAX; i++) {
             g2.setStroke(new BasicStroke(3));
 
-            // -------------------------
-            // 1. 무기 슬롯 (윗줄)
-            // -------------------------
+            // 무기 슬롯 (윗줄)
             g2.setColor(Color.BLACK);
             g2.drawRoundRect(currentX, 10, SLOT_SIZE, SLOT_SIZE, 20, 20);
 
@@ -65,15 +68,14 @@ public class ItemSlot extends Sprite {
                     g2.drawImage(img, currentX + offset, 10 + offset, ICON_SIZE, ICON_SIZE, null);
 
                     // 레벨 표시
-                    g2.drawString("Lv" + item.level, currentX + 52, 10 + 65);
+                    g2.drawString("Lv"+ item.level, currentX, 10 +SLOT_SIZE+GAP);
 
                 } catch (Exception e) {
                     g2.drawString("X", currentX + 30, 50);
                 }
             }
-            // 2. 서포트 슬롯 (아랫줄)
-
-            int secondRowY = 10 + SLOT_SIZE + 10;
+            // 서포트 슬롯
+            int secondRowY = 15 + SLOT_SIZE + 15;
             g2.setColor(Color.BLACK);
             g2.drawRoundRect(currentX, secondRowY, SLOT_SIZE, SLOT_SIZE, 20, 20);
 
@@ -86,7 +88,7 @@ public class ItemSlot extends Sprite {
                     g2.drawImage(img, currentX + offset, secondRowY + offset, ICON_SIZE, ICON_SIZE, null);
 
                     // 레벨 표시
-                    g2.drawString("Lv" + support.level, currentX + 52, secondRowY + 65);
+                    g2.drawString("Lv"+support.level, currentX, secondRowY+SLOT_SIZE+GAP);
 
                 } catch (Exception e) {
                     g2.drawString("X", currentX + 30, secondRowY + 40);
