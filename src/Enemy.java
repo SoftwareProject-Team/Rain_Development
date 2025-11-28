@@ -1,6 +1,7 @@
 import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.timer.Timer;
+import org.openpatch.scratch.KeyCode;
 
 public class Enemy extends Sprite {
 
@@ -84,6 +85,12 @@ public class Enemy extends Sprite {
         // 일시정지 아닐 때만 실행 (GameManager에서 확인)
         if (GameManager.isGamePaused) return;
 
+        // 테스트용 코드, K 누르면 올킬
+        if (isKeyPressed(KeyCode.VK_K)) {
+            Die();
+            return; // 이미 죽었으므로 이후 로직(이동, 애니메이션 등)은 실행하지 않음
+        }
+
         if (!state && spawnDelay.afterMillis(1000)) {
             state = true;
         }
@@ -113,7 +120,11 @@ public class Enemy extends Sprite {
         }
     }
     protected void Damage() {}
-    private  void Die(){}
+
+    private void Die() {
+        GameManager.Instance.add(new XPOrb(this.getX(), this.getY(), (int)this.data.exp));
+        GameManager.Instance.remove(this);
+    }
 
     public void setPosition() {
         this.setX((Math.random() * 600) - 200); // 오른쪽 끝
