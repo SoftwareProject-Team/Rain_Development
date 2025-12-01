@@ -74,8 +74,6 @@ class Player extends Sprite {
         move();
         animation();
         cooldown();
-
-        damageTimer--;
     }
 
 
