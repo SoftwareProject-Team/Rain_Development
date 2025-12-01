@@ -132,11 +132,11 @@ public class Enemy extends Sprite {
     }
 
     public void setPosition() {
-        this.setX((Math.random() * 600) - 200); // 오른쪽 끝
-        this.setY((Math.random() * 600) - 200); // 위아래 랜덤 위치
+        this.setX((Math.random() - 0.5) * 800); // 오른쪽 끝
+        this.setY((Math.random() - 0.5) * 600); // 위아래 랜덤 위치
         do {
-            this.setX((Math.random() * 600) - 200);
-            this.setY((Math.random() * 600) - 200);
+            this.setX((Math.random() - 0.5) * 800);
+            this.setY((Math.random() - 0.5) * 600);
         } while(distanceToSprite(player) < 150);
     }
 
