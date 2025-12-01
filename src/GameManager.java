@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class GameManager extends Stage {
 
+    public Player player;
 
     public static final ArrayList<ItemData> WEAPON_SLOT = new ArrayList<>();
     // 설명 이미지 설정
@@ -15,6 +16,9 @@ public class GameManager extends Stage {
 
     ItemSlot itemSlot;
     public static GameManager Instance;
+
+    private XPBar xpBar;
+
     int waveTimer = 0;
     boolean isFirstWave = true;
     double gameTimer = 480.0;
@@ -25,7 +29,7 @@ public class GameManager extends Stage {
 
         Instance = this;
 
-        Sprite player = new Player();
+        player = new Player();
         this.add(player);
 
         // 타이머 숫자 5개 생성, 화면에 붙이기
@@ -34,6 +38,12 @@ public class GameManager extends Stage {
             this.add(t);
         }
 
+        // HPBar 생성, 화면에 붙이기
+        HPBar hpBar = new HPBar();
+        this.add(hpBar);
+
+        xpBar = new XPBar();
+        this.add(xpBar);
         itemSlot = new ItemSlot();
         this.add(itemSlot);
     }
@@ -57,7 +67,6 @@ public class GameManager extends Stage {
             waveTimer = 0; // 0으로 초기화 (다시 15초 세기 시작)
             isFirstWave = false;
         }
-
     }
 
     private void spawnWave() {
