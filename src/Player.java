@@ -128,4 +128,11 @@ class Player extends Sprite {
     public void cooldown(){
         damageTimer--;
     }
+
+    public void getDamage() {
+        if(damageTimer < 0) {
+            hp -= 1;
+            damageTimer = INVINCIBLE_TIME;
+        }
+    }
 }
