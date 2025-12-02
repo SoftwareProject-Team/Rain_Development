@@ -13,7 +13,7 @@ public class XPBar extends Sprite {
 
     public XPBar() {
         initializeExpList();
-        generateAndLoadCostumes(); // 핵심: 이미지 생성 및 로딩
+        GameManager.AddCostumes(this, GEN_PATH, "xp_", 100);
 
         // 위치 설정 (화면 상단)
         this.setX(0);
@@ -39,7 +39,7 @@ public class XPBar extends Sprite {
             int height = 15;
 
             // 0% 부터 100% 까지 이미지 101장 생성
-            for (int i = 0; i <= 100; i++) {
+            for (int i = 1; i <= 101; i++) {
                 // 1. 메모리에 도화지(Image) 생성
                 BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
                 Graphics2D g = image.createGraphics();
@@ -50,7 +50,7 @@ public class XPBar extends Sprite {
                 g.fillRect(0, 0, width, height);
 
                 // 게이지 (초록색)
-                int fillWidth = (int) (width * (i / 100.0));
+                int fillWidth = (int) (width * ((i-1) / 100.0));
                 g.setColor(new Color(135, 238, 135, 136));
                 g.fillRect(0, 0, fillWidth, height);
 
@@ -63,7 +63,7 @@ public class XPBar extends Sprite {
 
                 g.dispose();
 
-                // 3. 파일로 저장 ("sprites/generated_xp/xp_0.png" 등)
+                // 3. 파일로 저장 ("sprites/generated_xp/xp_1.png" 등)
                 File file = new File(GEN_PATH + "xp_" + i + ".png");
                 ImageIO.write(image, "png", file);
 
@@ -106,6 +106,6 @@ public class XPBar extends Sprite {
         if (percent > 100) percent = 100;
 
         // 해당하는 %의 코스튬으로 교체
-        this.switchCostume(String.valueOf(percent));
+        this.switchCostume(String.valueOf(percent+1));
     }
 }

@@ -3,21 +3,32 @@ import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.math.Vector2;
 
+import java.util.List;
+
 class Player extends Sprite {
 
     public static String path = "sprites/Player/";
 
     public static Player Instance;
 
-
     public int exp;
     public int hp;
     public int maxHp;
     public int level;
-    public int magnetRange;
     public Vector2 pos;
 
     public double speed;
+    public int magnetRange;
+
+
+    public double   bonusAttackSpeed;
+    public double   bonusDamage;
+    public double   bonusAttackSize;
+    public double   bonusSpeed;
+    public int      bonusMaxHp;
+    public int      bonusProjectile;
+    public double   bonusExp;
+    public int      bonusMagnetRange;
 
     //이동
     public double inputX;
@@ -57,6 +68,16 @@ class Player extends Sprite {
 
         move(new Vector2(0, 0));
 
+        bonusAttackSpeed = 0;
+        bonusDamage = 0;
+        bonusAttackSize = 0;
+        bonusSpeed = 0;
+        bonusMaxHp = 0;
+        bonusProjectile = 0;
+        bonusExp = 0;
+        bonusMagnetRange = 0;
+
+
         speed = 50;
         hp = 20;
         maxHp = 20;
@@ -74,8 +95,26 @@ class Player extends Sprite {
         move();
         animation();
         cooldown();
+
+        checkNearestEnemy();
     }
 
+    public Enemy nearestEnemy;
+
+    public void checkNearestEnemy(){
+        nearestEnemy = null;
+        double min = 1000;
+
+        List<Enemy> enemies = GameManager.Instance.findSpritesOf(Enemy.class);
+
+        for (int i = 0; i < enemies.size(); i++) {
+            double distance = distanceToSprite(enemies.get(i));
+            if(distance < min){
+                nearestEnemy = enemies.get(i);
+                min = distance;
+            }
+        }
+    }
 
     public void move(){
         inputX = 0.0; inputY = 0.0;
