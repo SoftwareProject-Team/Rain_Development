@@ -11,6 +11,10 @@ public class GameManager extends Stage {
     boolean isFirstWave = true;
     double gameTimer = 480.0;
     static boolean isGamePaused = false;
+    private int waveCounter = 0;
+    private int[] snails = {10, 10, 15, 15, 10, 10};
+    private int[] slimes = {0, 3, 0, 3, 5, 5};
+    private int[] boars = {0, 0, 0, 0, 0, 2};
 
     public GameManager() {
         super(800, 600);
@@ -51,15 +55,15 @@ public class GameManager extends Stage {
 
     }
     private void spawnWave() {
-        for (int i = 0; i < 4; i++)
-        {
+        if waveCounter > snails.length { waveCounter = 0; }
+
+        for (int i = 0; i < snails[waveCounter]; i++) {
             this.add(new Enemy(Enemy.snail));
         }
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < slimes[waveCounter]; i++) {
             this.add(new Enemy(Enemy.slime));
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < boars[waveCounter]; i++) {
             this.add(new Enemy(Enemy.boar));
         }
     }
