@@ -5,8 +5,6 @@ import org.openpatch.scratch.KeyCode;
 
 public class Enemy extends Sprite {
 
-    public Player player;
-
     public static class EnemyData{
         public String   anim;
         public int      frameCount;
@@ -36,12 +34,12 @@ public class Enemy extends Sprite {
     }
 
     public EnemyData data;
+    public double hp;
 
     public static String path = "sprites/Enemy/";
 
     Enemy(EnemyData data){
         this.data = data;
-        player = new Player();
     }
 
 
@@ -123,7 +121,14 @@ public class Enemy extends Sprite {
         }
     }
     protected void Damage() {
-        if(distanceToSprite(player) < getSize()) player.getDamage();
+        if(distanceToSprite(Player.Instance) < data.size) Player.Instance.getDamage();
+    }
+
+    public void getDamage(double damage){
+        hp -= damage;
+        if(hp <= 0){
+            Die();
+        }
     }
 
     private void Die() {
@@ -137,7 +142,7 @@ public class Enemy extends Sprite {
         do {
             this.setX((Math.random() - 0.5) * 800);
             this.setY((Math.random() - 0.5) * 600);
-        } while(distanceToSprite(player) < 150);
+        } while(distanceToSprite(Player.Instance) < 150);
     }
 
     @Override
@@ -159,5 +164,7 @@ public class Enemy extends Sprite {
         setPosition();
         switchCostume("spawn");
         spawnDelay = new Timer();
+
+        hp = data.hp;
     }
 }

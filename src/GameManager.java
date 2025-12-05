@@ -1,6 +1,7 @@
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.Stage;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameManager extends Stage {
 
@@ -31,6 +32,10 @@ public class GameManager extends Stage {
 
         player = new Player();
         this.add(player);
+
+        this.add(new FireAxe());
+        this.add(new ThornShooter());
+        this.add(new SwordDance());
 
         // 타이머 숫자 5개 생성, 화면에 붙이기
         for (int i = 0; i < 5; i++) {

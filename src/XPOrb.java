@@ -22,8 +22,11 @@ public class XPOrb extends Sprite {
         } else {
             this.switchCostume("exp4");
         }
+    }
 
-        this.setSize(50);
+    @Override
+    public void whenAddedToStage() {
+        this.setSize(100);
     }
 
     @Override
