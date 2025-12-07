@@ -78,12 +78,12 @@ class Player extends Sprite {
         bonusMagnetRange = 0;
 
 
-        speed = 50;
-        hp = 20;
-        maxHp = 20;
+        speed = 60;
+        hp = 100;
+        maxHp = 100;
         exp = 0;
         level = 1;
-        magnetRange = 15;
+        magnetRange = 20;
 
         Instance = this;
     }
@@ -91,6 +91,8 @@ class Player extends Sprite {
     //매 프레임마다 실행됨 (60프레임), 기존 코드 DeltaTime 사이클 대체
     public void run() {
         if (GameManager.isGamePaused) return;
+
+        goToFrontLayer();
 
         move();
         animation();
@@ -130,7 +132,7 @@ class Player extends Sprite {
         double dirX = inputX / scalar;
         double dirY = inputY / scalar;
 
-        changePosition(new Vector2(dirX * speed * 0.016, dirY * speed * 0.016));
+        changePosition(new Vector2(dirX * speed * (1 + bonusSpeed) * GameManager.FRAME_TIME, dirY * speed * (1+bonusSpeed) * GameManager.FRAME_TIME));
         pos = getPosition();
 
         if(scalar > 0.9) playAnim("Run", 8, 5);

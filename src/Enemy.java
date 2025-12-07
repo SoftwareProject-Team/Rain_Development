@@ -1,7 +1,9 @@
 import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
+import org.openpatch.scratch.extensions.math.Vector2;
 import org.openpatch.scratch.extensions.timer.Timer;
 import org.openpatch.scratch.KeyCode;
+import java.util.List;
 
 public class Enemy extends Sprite {
 
@@ -47,8 +49,8 @@ public class Enemy extends Sprite {
             "boar",
             8,
             8,
-            5,
-            22f,
+            100,
+            30f,
             50,
             15
     );
@@ -57,7 +59,7 @@ public class Enemy extends Sprite {
             "redSlime",
             6,
             10,
-            5,
+            50,
             20f,
             10,
             25
@@ -67,7 +69,7 @@ public class Enemy extends Sprite {
             "snail",
             8,
             8,
-            3,
+            25,
             30f,
             1,
             25
@@ -86,12 +88,6 @@ public class Enemy extends Sprite {
         // 일시정지 아닐 때만 실행 (GameManager에서 확인)
         if (GameManager.isGamePaused) return;
 
-        // 테스트용 코드, K 누르면 올킬
-        if (isKeyPressed(KeyCode.VK_K)) {
-            Die();
-            return; // 이미 죽었으므로 이후 로직(이동, 애니메이션 등)은 실행하지 않음
-        }
-
         if (!state && spawnDelay.afterMillis(1000)) {
             state = true;
         }
@@ -105,7 +101,7 @@ public class Enemy extends Sprite {
 
     protected void Move() {
         pointTowardsSprite(Player.Instance);
-        move(data.speed * 0.016);
+        move(data.speed * GameManager.FRAME_TIME);
     }
 
     protected void Animation() {
@@ -121,14 +117,23 @@ public class Enemy extends Sprite {
         }
     }
     protected void Damage() {
-        if(distanceToSprite(Player.Instance) < data.size) Player.Instance.getDamage();
+        if(distanceToSprite(Player.Instance) < data.size) {
+            Player.Instance.getDamage();
+            Knockback(5);
+        }
     }
 
     public void getDamage(double damage){
+        if(!state) return;
+
         hp -= damage;
         if(hp <= 0){
             Die();
         }
+    }
+
+    public void Knockback(double multiplier){
+        move(multiplier * -1 * GameManager.FRAME_TIME * data.speed);
     }
 
     private void Die() {

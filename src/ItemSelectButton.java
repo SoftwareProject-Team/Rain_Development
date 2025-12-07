@@ -34,7 +34,7 @@ public class ItemSelectButton extends Sprite {
         DESC_CONFIG.put("borderColor", Color.BLACK);
     }
     public ItemSelectButton(int x, int y, String type, String name, String itemImgPath, String descImgPath) {
-        GameManager.isGamePaused = true;
+        GameManager.Instance.GamePause();
         this.itemName = name;
         this.itemImgPath = itemImgPath;
         this.descImgPath = descImgPath;
@@ -134,7 +134,7 @@ public class ItemSelectButton extends Sprite {
 
     @Override
     public void whenClicked() {
-        GameManager.isGamePaused = false;
+        GameManager.Instance.GamePlay();
         GameManager.Instance.addItem(GameManager.WEAPON_SLOT,type,itemImgPath);
         GameManager.Instance.hideOtherButtons();
     }

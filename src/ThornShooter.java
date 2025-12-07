@@ -28,24 +28,22 @@ public class ThornShooter extends WeaponItem{
             setSize(size);
 
             speed = 150;
-            deathFrame = 300;
+            deathTime = 2;
 
             if(Player.Instance.nearestEnemy != null) {
                 pointTowardsSprite(Player.Instance.nearestEnemy);
                 setDirection(getDirection() + (Math.random() * 20 - 10));
             }
-            goToBackLayer();
         }
 
         @Override
         public void run() {
             if (GameManager.isGamePaused) return;
 
-            deathFrame--;
-            if(deathFrame < 0) remove();
+            deathTime -= GameManager.FRAME_TIME;
+            if(deathTime < 0) remove();
 
-            move(speed * 0.016);
-            nextCostume();
+            move(speed * GameManager.FRAME_TIME);
 
             List<Enemy> enemies = getTouchingSprites(Enemy.class);
             if(enemies != null){
@@ -54,6 +52,7 @@ public class ThornShooter extends WeaponItem{
                     if(distanceToSprite(e) < hitSize) {
                         e.getDamage(damage);
                         remove();
+                        e.Knockback(10);
                     }
                 }
             }
@@ -68,13 +67,13 @@ public class ThornShooter extends WeaponItem{
     }
 
     void Initialize(){
-        level = 5; //임시 레벨 설정
+        level = 1; //임시 레벨 설정
     }
 
     public static final double HIT_SIZE = 12;
 
     public static final double[] damage = new double[] { 1, 2, 3, 4, 5 };
-    public static final int[] attackDelay = new int[] { 60, 48, 36, 24, 12 };
+    public static final double[] attackDelay = new double[] { 1, 0.8, 0.6, 0.4, 0.2 };
     public static final int size = 100;
 
     public double attackTimer;
@@ -85,8 +84,8 @@ public class ThornShooter extends WeaponItem{
 
         if (GameManager.isGamePaused) return;
 
-        attackTimer--;
-        if(attackTimer < 1){
+        attackTimer -= GameManager.FRAME_TIME;
+        if(attackTimer < 0){
             attackTimer += attackDelay[level-1] / (1 + Player.Instance.bonusAttackSpeed);
 
             if(Player.Instance.nearestEnemy != null) {

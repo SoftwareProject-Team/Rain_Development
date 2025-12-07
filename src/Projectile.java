@@ -14,7 +14,7 @@ public class Projectile extends Sprite {
     public double hitSize;
 
     public double damage;
-    public int deathFrame;
+    public double deathTime;
 
     public double speed = 50;
 
