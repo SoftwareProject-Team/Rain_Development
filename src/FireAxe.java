@@ -27,28 +27,32 @@ public class FireAxe extends WeaponItem{
             setSize(size);
 
             speed = 50;
-            deathFrame = 900;
-
-            goToBackLayer();
+            deathTime = 15;
         }
+
+        public static final double HIT_DELAY = 0.1;
+        public double hitTimer;
 
         @Override
         public void run() {
             if (GameManager.isGamePaused) return;
 
-            deathFrame--;
-            if(deathFrame < 0) remove();
+            deathTime -= GameManager.FRAME_TIME;
+            if(deathTime < 0) remove();
 
-            move(speed * 0.016);
+            move(speed * GameManager.FRAME_TIME);
             nextCostume();
 
-            List<Enemy> enemies = getTouchingSprites(Enemy.class);
-            if(enemies != null){
-                for (int i = 0; i < enemies.size(); i++) {
-                    Enemy e = enemies.get(i);
-                    if(distanceToSprite(e) < hitSize && !alreadyHit.contains(e)) {
-                        e.getDamage(damage);
-                        alreadyHit.add(e);
+            hitTimer += GameManager.FRAME_TIME;
+            if(hitTimer > HIT_DELAY) {
+                hitTimer -= HIT_DELAY;
+                List<Enemy> enemies = getTouchingSprites(Enemy.class);
+                if (enemies != null) {
+                    for (Enemy e : enemies) {
+                        if (distanceToSprite(e) < hitSize) {
+                            e.getDamage(damage);
+                            e.Knockback(5);
+                        }
                     }
                 }
             }
@@ -63,15 +67,15 @@ public class FireAxe extends WeaponItem{
     }
 
     void Initialize(){
-        level = 5; //임시 레벨 설정
+        level = 1; //임시 레벨 설정
     }
 
-    public static final double HIT_SIZE = 20;
+    public static final double HIT_SIZE = 13;
 
     public static final double[] damage = new double[] { 5, 8, 11, 15, 25 };
-    public static final double[] attackSize = new double[] { 150, 170, 200, 230, 300 };
+    public static final double[] attackSize = new double[] { 200, 220, 250, 280, 350 };
     public static final int[] attackCount = new int[] { 1, 1, 2, 2, 3 };
-    public static final int[] attackDelay = new int[] { 360, 300, 240, 210, 180 };
+    public static final double[] attackDelay = new double[] { 6, 5, 4, 3.5, 3 };
 
     public double attackTimer;
 
@@ -81,8 +85,8 @@ public class FireAxe extends WeaponItem{
 
         if (GameManager.isGamePaused) return;
 
-        attackTimer--;
-        if(attackTimer < 1){
+        attackTimer -= GameManager.FRAME_TIME;
+        if(attackTimer < 0){
             attackTimer += attackDelay[level-1] / (1 + Player.Instance.bonusAttackSpeed);
 
             int atkCount = attackCount[level-1] + Player.Instance.bonusProjectile;

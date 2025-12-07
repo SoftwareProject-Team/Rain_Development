@@ -40,12 +40,14 @@ public class TimerNumber extends Sprite {
             this.switchCostume("colon");
         }
 
-        setSize(300);
+        setSize(75);
     }
 
     @Override
     public void run() {
         if (GameManager.isGamePaused) return;
+
+        goToFrontLayer();
 
         // 콜론은 계산이 필요 없음
         if (timerPos == 4) return;

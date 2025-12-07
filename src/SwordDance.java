@@ -15,12 +15,11 @@ public class SwordDance extends WeaponItem{
         Vector2 startPos;
         double damage;
 
-        public int deathFrame;
+        public double deathTimer;
         public List<Enemy> alreadyHit = new ArrayList<>();
 
         SwordDanceObject(double dir, Vector2 startPos, double size, double damage){
             this.dir = dir;
-            System.out.println(dir);
             if(dir > 180){
                 this.startPos = new Vector2(startPos.getX() - 30, startPos.getY());
             }
@@ -40,29 +39,28 @@ public class SwordDance extends WeaponItem{
         }
 
         public void Initialize(){
-            this.setRotationStyle(RotationStyle.LEFT_RIGHT);
+            setDirection(dir + (Math.random() - 0.5) * 20);
 
-            setDirection(dir);
             setPosition(startPos);
             setSize(size);
 
-            deathFrame = 15;
-
-            goToBackLayer();
+            deathTimer = 0.20;
         }
 
-        int animDelay = 0;
+        double animDelay = 0;
 
         @Override
         public void run() {
             if (GameManager.isGamePaused) return;
 
-            deathFrame--;
-            if(deathFrame < 0) remove();
+            deathTimer -= GameManager.FRAME_TIME;
+            if(deathTimer < 0) remove();
 
-            animDelay++;
-            if(animDelay % 4 == 0 && animDelay < 17){
+            animDelay += GameManager.FRAME_TIME;
+            double time = 0.05;
+            if(animDelay > time){
                 nextCostume();
+                animDelay -= time;
             }
 
             List<Enemy> enemies = getTouchingSprites(Enemy.class);
@@ -72,12 +70,11 @@ public class SwordDance extends WeaponItem{
                     if(!alreadyHit.contains(e)) {
                         e.getDamage(damage);
                         alreadyHit.add(e);
+                        e.Knockback(10);
                     }
                 }
             }
         }
-
-
     }
 
     @Override
@@ -86,14 +83,14 @@ public class SwordDance extends WeaponItem{
     }
 
     void Initialize(){
-        level = 5; //임시 레벨 설정
+        level = 1; //임시 레벨 설정
     }
 
     public static final double[] damage = new double[] { 2, 4, 6, 8, 10 };
-    public static final int[] attackDelay = new int[] { 300, 270, 240, 210, 150 };
+    public static final double[] attackDelay = new double[] { 5, 4.5, 4, 3.5, 2.5 };
     public static final int[] attackRepeat = new int[] { 2, 3, 4, 5, 7 };
-    public static final int[] attackRepeatDelay = new int[] { 30, 25, 20, 15, 10 };
-    public static final double[] attackSize = new double[] { 150, 170, 200, 230, 300 };
+    public static final double[] attackRepeatDelay = new double[] { 0.5, 0.4, 0.3, 0.2, 0.1 };
+    public static final double[] attackSize = new double[] { 40, 45, 50, 55, 75 };
 
     public double attackTimer;
     public double repeatTimer;
@@ -105,17 +102,17 @@ public class SwordDance extends WeaponItem{
 
         if (GameManager.isGamePaused) return;
 
-        attackTimer--;
-        if(attackTimer < 1){
+        attackTimer -= GameManager.FRAME_TIME ;
+        if(attackTimer < 0){
             if(repeatCounter <= 0) {
                 attackTimer += attackDelay[level - 1] / (1 + Player.Instance.bonusAttackSpeed);
                 repeatCounter = attackRepeat[level-1];
             }
             else {
-                repeatTimer--;
-                if(repeatTimer < 1){
+                repeatTimer -= GameManager.FRAME_TIME;
+                if(repeatTimer < 0){
                     repeatCounter--;
-                    repeatTimer = attackRepeatDelay[level-1];
+                    repeatTimer = attackRepeatDelay[level-1] / (1 + Player.Instance.bonusAttackSpeed);
                     GameManager.Instance.add(new SwordDanceObject(
                             Player.Instance.getDirection(),
                             Player.Instance.getPosition(),

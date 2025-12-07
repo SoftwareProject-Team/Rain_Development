@@ -2,7 +2,7 @@ import org.openpatch.scratch.Sprite;
 
 public class XPOrb extends Sprite {
 
-    private int expAmount;
+    public int expAmount;
     private static final String PATH = "sprites/Exp/";
 
     public XPOrb(double x, double y, int amount) {
@@ -27,23 +27,5 @@ public class XPOrb extends Sprite {
     @Override
     public void whenAddedToStage() {
         this.setSize(100);
-    }
-
-    @Override
-    public void run() {
-        if (GameManager.isGamePaused) return;
-
-        Player player = Player.Instance;
-
-        if (player == null) return;
-
-        // 무한 반복 -> 거리 체크 로직
-        if (distanceToSprite(player) < player.magnetRange) {
-
-            // 경험치 획득
-            player.exp += this.expAmount;
-
-            GameManager.Instance.remove(this);
-        }
     }
 }

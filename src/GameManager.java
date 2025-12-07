@@ -1,5 +1,7 @@
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.Stage;
+import org.openpatch.scratch.extensions.timer.Timer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +27,17 @@ public class GameManager extends Stage {
     double gameTimer = 480.0;
     static boolean isGamePaused = false;
 
+    public static Timer timer = new Timer();
+    public int lastTime;
+
+    public static double FRAME_TIME = 0;
+
+
     public GameManager() {
         super(800, 600);
 
         Instance = this;
+        this.add(new Background());
 
         player = new Player();
         this.add(player);
@@ -36,6 +45,12 @@ public class GameManager extends Stage {
         this.add(new FireAxe());
         this.add(new ThornShooter());
         this.add(new SwordDance());
+        this.add(new IceGrave());
+        this.add(new BoneStaff());
+        this.add(new CycleSythe());
+        this.add(new BloodyGrimoire());
+
+
 
         // 타이머 숫자 5개 생성, 화면에 붙이기
         for (int i = 0; i < 5; i++) {
@@ -51,7 +66,11 @@ public class GameManager extends Stage {
         this.add(xpBar);
         itemSlot = new ItemSlot();
         this.add(itemSlot);
+
+        timer = new Timer();
+        lastTime = timer.millis();
     }
+
     public static void main(String[] args) {
         new GameManager();
     }
@@ -62,7 +81,13 @@ public class GameManager extends Stage {
 
         waveTimer++;
 
-        gameTimer -= (1.0 / 60.0);
+        FRAME_TIME = (double)(timer.millis() - lastTime) / 1000;
+        System.out.println(FRAME_TIME);
+
+        lastTime = timer.millis();
+
+
+        gameTimer -= FRAME_TIME;
         // 0초 이하로 내려가지 않게 고정
         if (gameTimer < 0) gameTimer = 0;
 
@@ -72,18 +97,94 @@ public class GameManager extends Stage {
             waveTimer = 0; // 0으로 초기화 (다시 15초 세기 시작)
             isFirstWave = false;
         }
+
+        separateAllEnemies(20);
+        handleExpPickup();
+    }
+
+    public void GamePause(){
+        isGamePaused = true;
+        lastTime = timer.millis();
+    }
+
+    public void GamePlay(){
+        isGamePaused = false;
+        lastTime = timer.millis();
+    }
+
+    public void separateAllEnemies(double minDistance) {
+        List<Enemy> enemies = findSpritesOf(Enemy.class);
+
+        int n = enemies.size();
+        for (int i = 0; i < n; i++) {
+            Enemy a = enemies.get(i);
+            for (int j = i + 1; j < n; j++) {   // i+1부터 -> 쌍을 한 번만 처리
+                Enemy b = enemies.get(j);
+
+                double dist = a.distanceToSprite(b);
+                if (dist == 0) {
+                    dist = 0.0001; // 완전 겹쳤을 때 NaN 방지용
+                }
+
+                if (dist < minDistance) {
+                    double overlap = (minDistance - dist);
+
+                    // 위치 가져오기
+                    var posA = a.getPosition();  // 예: Vector2D, Point2D 등
+                    var posB = b.getPosition();
+
+                    double dx = posB.getX() - posA.getX();
+                    double dy = posB.getY() - posA.getY();
+
+                    double nx = dx / dist;
+                    double ny = dy / dist;
+
+                    double push = overlap / 2.0;
+
+                    // 서로 반씩 밀어내기
+                    a.setPosition(
+                            posA.getX() - nx * push,
+                            posA.getY() - ny * push
+                    );
+                    b.setPosition(
+                            posB.getX() + nx * push,
+                            posB.getY() + ny * push
+                    );
+                }
+            }
+        }
+    }
+
+    private void handleExpPickup() {
+        // 필드에 존재하는 모든 경험치 오브젝트 가져오기
+        List<XPOrb> orbs = findSpritesOf(XPOrb.class);
+
+        double magnetRange = player.magnetRange;
+        double magnetRangeSq = magnetRange * magnetRange;
+
+        for (XPOrb orb : orbs) {
+            // 거리 제곱으로 비교해 sqrt 비용 제거
+            double dx = orb.getX() - player.getX();
+            double dy = orb.getY() - player.getY();
+            double distSq = dx * dx + dy * dy;
+
+            if (distSq < magnetRangeSq) {
+                player.exp += orb.expAmount;
+                remove(orb); // GameManager.Instance.remove(orb) 등 네 구현에 맞게
+            }
+        }
     }
 
     private void spawnWave() {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 40; i++)
         {
             this.add(new Enemy(Enemy.snail));
         }
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 30; i++)
         {
             this.add(new Enemy(Enemy.slime));
         }
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 20; i++) {
             this.add(new Enemy(Enemy.boar));
         }
         this.add(new ItemSelectButton(0,0,"Weapon","colon","sprites/Number/colon.png","sprites/Number/colon.png"));
