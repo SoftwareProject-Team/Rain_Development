@@ -52,7 +52,7 @@ public class IceGrave extends WeaponItem{
             animDelay += GameManager.FRAME_TIME;
             if(animDelay > 0.04 && animCount < 15){
                 animCount++;
-                animDelay -= GameManager.FRAME_TIME;
+                animDelay -= 0.04;
                 nextCostume();
             }
 
@@ -79,7 +79,7 @@ public class IceGrave extends WeaponItem{
     }
 
     void Initialize(){
-        level = 1; //임시 레벨 설정
+        level = 0; //임시 레벨 설정
     }
 
     public static final double HIT_SIZE = 43;

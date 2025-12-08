@@ -43,7 +43,7 @@ public class BloodyGrimoire extends WeaponItem {
             nextCostume();
 
             move(speed * GameManager.FRAME_TIME);
-            nextCostume();
+            //nextCostume();
         }
 
         public void summonField(){
@@ -127,7 +127,7 @@ public class BloodyGrimoire extends WeaponItem {
     }
 
     void Initialize(){
-        level = 5; //임시 레벨 설정
+        level = 0; //임시 레벨 설정
     }
 
     public static final double HIT_SIZE = 36;

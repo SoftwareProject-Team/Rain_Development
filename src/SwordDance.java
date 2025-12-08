@@ -83,7 +83,7 @@ public class SwordDance extends WeaponItem{
     }
 
     void Initialize(){
-        level = 1; //임시 레벨 설정
+        level = 0; //임시 레벨 설정
     }
 
     public static final double[] damage = new double[] { 2, 4, 6, 8, 10 };

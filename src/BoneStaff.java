@@ -1,7 +1,6 @@
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.math.Vector2;
 import java.util.List;
-import java.util.Random;
 
 public class BoneStaff extends WeaponItem{
     class BoneStaffPP extends Projectile {
@@ -42,8 +41,7 @@ public class BoneStaff extends WeaponItem{
 
             List<Enemy> enemies = getTouchingSprites(Enemy.class);
             if(enemies != null){
-                for (int i = 0; i < enemies.size(); i++) {
-                    Enemy e = enemies.get(i);
+                for (Enemy e : enemies) {
                     if(distanceToSprite(e) < hitSize) {
                         e.getDamage(damage);
                         remove();
@@ -62,7 +60,7 @@ public class BoneStaff extends WeaponItem{
     }
 
     void Initialize(){
-        level = 1; //임시 레벨 설정
+        level = 0; //임시 레벨 설정
     }
 
     public static final double HIT_SIZE = 30;

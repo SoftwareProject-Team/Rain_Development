@@ -4,4 +4,13 @@ import java.util.List;
 
 public class Item extends Sprite {
     public int level;
+    public String name;
+
+    public Item(String name) {
+        this.name = name;
+    }
+
+    void levelup() {
+        if(level < 5) level++;
+    }
 }

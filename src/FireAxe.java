@@ -67,7 +67,7 @@ public class FireAxe extends WeaponItem{
     }
 
     void Initialize(){
-        level = 1; //임시 레벨 설정
+        level = 0; //임시 레벨 설정
     }
 
     public static final double HIT_SIZE = 13;
