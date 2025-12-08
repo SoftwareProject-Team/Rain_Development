@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Random;
 
 public class SwordDance extends WeaponItem{
+    public SwordDance(String name, String iconPath) {
+        super(name, iconPath);
+    }
+
     class SwordDanceObject extends Sprite {
         public static String path = "sprites/Weapon/SwordDance/";
 
@@ -86,7 +90,7 @@ public class SwordDance extends WeaponItem{
         level = 0; //임시 레벨 설정
     }
 
-    public static final double[] damage = new double[] { 2, 4, 6, 8, 10 };
+    public static final double[] damage = new double[] { 3, 5, 7, 10, 15 };
     public static final double[] attackDelay = new double[] { 5, 4.5, 4, 3.5, 2.5 };
     public static final int[] attackRepeat = new int[] { 2, 3, 4, 5, 7 };
     public static final double[] attackRepeatDelay = new double[] { 0.5, 0.4, 0.3, 0.2, 0.1 };

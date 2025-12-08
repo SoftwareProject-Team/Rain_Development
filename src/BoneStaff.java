@@ -1,8 +1,13 @@
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.math.Vector2;
 import java.util.List;
+import java.util.Random;
 
 public class BoneStaff extends WeaponItem{
+    public BoneStaff(String name, String iconPath) {
+        super(name, iconPath);
+    }
+
     class BoneStaffPP extends Projectile {
         public static String path = "sprites/Weapon/BoneStaff/";
 
@@ -26,8 +31,8 @@ public class BoneStaff extends WeaponItem{
             setSize(size);
             setDirection(dir);
 
-            speed = 150;
-            deathTime = 1;
+            speed = 200;
+            deathTime = 1.5;
         }
 
         @Override
@@ -41,7 +46,8 @@ public class BoneStaff extends WeaponItem{
 
             List<Enemy> enemies = getTouchingSprites(Enemy.class);
             if(enemies != null){
-                for (Enemy e : enemies) {
+                for (int i = 0; i < enemies.size(); i++) {
+                    Enemy e = enemies.get(i);
                     if(distanceToSprite(e) < hitSize) {
                         e.getDamage(damage);
                         remove();

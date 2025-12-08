@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BloodyGrimoire extends WeaponItem {
+    public BloodyGrimoire(String name, String iconPath) {
+        super(name, iconPath);
+    }
+
     class BloodyGrimoirePP extends Projectile {
         public static String path = "sprites/Weapon/BloodyGrimoire/";
 
@@ -40,10 +44,10 @@ public class BloodyGrimoire extends WeaponItem {
             deathTime -= GameManager.FRAME_TIME;
             if(deathTime < 0) summonField();
 
-            nextCostume();
+
 
             move(speed * GameManager.FRAME_TIME);
-            //nextCostume();
+            nextCostume();
         }
 
         public void summonField(){
@@ -87,7 +91,7 @@ public class BloodyGrimoire extends WeaponItem {
             deathTime = 5;
         }
 
-        public static final double HIT_DELAY = 0.1;
+        public static final double HIT_DELAY = 0.2;
         public double hitTimer;
 
         public double distance;
@@ -111,14 +115,13 @@ public class BloodyGrimoire extends WeaponItem {
                     for (Enemy e : enemies) {
                         if (distanceToSprite(e) < hitSize) {
                             e.getDamage(damage);
-                            e.Knockback(2);
+                            e.Knockback(3);
                         }
                     }
                 }
             }
         }
     }
-
 
 
     @Override
@@ -132,7 +135,7 @@ public class BloodyGrimoire extends WeaponItem {
 
     public static final double HIT_SIZE = 36;
 
-    public static final double[] damage = new double[] { 1, 2, 3, 4, 5 };
+    public static final double[] damage = new double[] { 1, 2, 3, 4, 6 };
     public static final double attackDelay = 5;
     public static final double bulletSize = 100;
     public static final int[] attackCount = new int[] { 1, 1, 2, 2, 3 };

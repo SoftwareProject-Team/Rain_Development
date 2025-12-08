@@ -3,6 +3,10 @@ import org.openpatch.scratch.extensions.math.Vector2;
 import java.util.List;
 
 public class FireAxe extends WeaponItem{
+    public FireAxe(String name, String iconPath) {
+        super(name, iconPath);
+    }
+
     class FireAxePP extends Projectile {
         public static String path = "sprites/Weapon/FlameAxe/";
 
@@ -70,10 +74,10 @@ public class FireAxe extends WeaponItem{
         level = 0; //임시 레벨 설정
     }
 
-    public static final double HIT_SIZE = 13;
+    public static final double HIT_SIZE = 15;
 
-    public static final double[] damage = new double[] { 5, 8, 11, 15, 25 };
-    public static final double[] attackSize = new double[] { 200, 220, 250, 280, 350 };
+    public static final double[] damage = new double[] { 2, 4, 6, 8, 11 };
+    public static final double[] attackSize = new double[] { 250, 270, 300, 340, 390 };
     public static final int[] attackCount = new int[] { 1, 1, 2, 2, 3 };
     public static final double[] attackDelay = new double[] { 6, 5, 4, 3.5, 3 };
 

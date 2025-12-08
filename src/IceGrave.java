@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Random;
 
 public class IceGrave extends WeaponItem{
+    public IceGrave(String name, String iconPath) {
+        super(name, iconPath);
+    }
+
     class IceGraveObject extends Sprite {
         public static String path = "sprites/Weapon/IceGrave/";
 
@@ -36,7 +40,7 @@ public class IceGrave extends WeaponItem{
             setPosition(startPos);
             setSize(size);
 
-            deathTimer = 0.6;
+            deathTimer = 0.5;
         }
 
         double animDelay = 0;
@@ -50,9 +54,9 @@ public class IceGrave extends WeaponItem{
             if(deathTimer < 0) remove();
 
             animDelay += GameManager.FRAME_TIME;
-            if(animDelay > 0.04 && animCount < 15){
+            if(animDelay > 0.03 && animCount < 15){
                 animCount++;
-                animDelay -= 0.04;
+                animDelay -= 0.03;
                 nextCostume();
             }
 
@@ -84,9 +88,9 @@ public class IceGrave extends WeaponItem{
 
     public static final double HIT_SIZE = 43;
 
-    public static final double[] damage = new double[] { 3, 6, 9, 12, 18 };
+    public static final double[] damage = new double[] { 4, 7, 10, 16, 24 };
     public static final double[] attackDelay = new double[] { 4, 3.5, 3, 2, 1.5 };
-    public static final double[] attackSize = new double[] { 200, 250, 320, 400, 550 };
+    public static final double[] attackSize = new double[] { 200, 230, 260, 290, 350 };
 
     public double attackTimer;
 

@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Random;
 
 public class ThornShooter extends WeaponItem{
+    public ThornShooter(String name, String iconPath) {
+        super(name, iconPath);
+    }
+
     class ThornShooterPP extends Projectile {
         public static String path = "sprites/Weapon/ThornShooter/";
 
@@ -70,9 +74,9 @@ public class ThornShooter extends WeaponItem{
         level = 0; //임시 레벨 설정
     }
 
-    public static final double HIT_SIZE = 12;
+    public static final double HIT_SIZE = 15;
 
-    public static final double[] damage = new double[] { 1, 2, 3, 4, 5 };
+    public static final double[] damage = new double[] { 3, 6, 10, 14, 18 };
     public static final double[] attackDelay = new double[] { 1, 0.8, 0.6, 0.4, 0.2 };
     public static final int size = 100;
 

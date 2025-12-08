@@ -13,8 +13,11 @@ public class HPBar extends Sprite {
 
     @Override
     public void run() {
+        if (GameManager.isGamePaused) return;
 
         Player player = GameManager.Instance.player;
+
+        goToFrontLayer();
 
         if (player != null) {
             this.setX(player.getX());
@@ -37,13 +40,6 @@ public class HPBar extends Sprite {
 
             this.switchCostume(String.valueOf(costumeIndex));
 
-        }
-
-        // 딜레이 (컴퓨터 작동 중지 방지)
-        try {
-            Thread.sleep(16); // 약 60프레임 (1000ms / 60)
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 }
