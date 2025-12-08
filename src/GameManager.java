@@ -568,7 +568,7 @@ public class GameManager extends Stage {
 
                 if(waveTimer1.afterMillis(30000)){
                     ResetWaveTimer();
-                    waveState = 14;
+                    waveState = 15;
 
                     for (int i = 0; i < 30; i++)
                     {
@@ -670,7 +670,7 @@ public class GameManager extends Stage {
 
             if (distSq < magnetRangeSq) {
                 player.exp += orb.expAmount * (1 + player.bonusExp);
-                System.out.println(player.level + ", " + player.exp);
+                // System.out.println(player.level + ", " + player.exp);
                 remove(orb); // GameManager.Instance.remove(orb) 등 네 구현에 맞게
             }
         }
@@ -751,6 +751,7 @@ public class GameManager extends Stage {
             if (data == item) {
                 check = false;
                 item.levelup();
+                selectable.removeIf(i -> i.level >= 5);
                 itemSlot.refreshUI();
             }
         }
@@ -762,20 +763,7 @@ public class GameManager extends Stage {
             itemSlot.refreshUI();
         }
 
-        if (slot.size() == ITEMMAX) {
-            List<Item> remove = new ArrayList<>();
-
-            for (Item i : selectable) {
-                if (i.level <= 0 || i.level >= 5) {
-                    remove.add(i);
-                }
-            }
-
-            for (Item ri : remove){
-                selectable.remove(ri);
-            }
-
-        }
+        if (slot.size() == ITEMMAX) selectable.removeIf(i -> i.level <= 0 || i.level >= 5);
 
     }
     public void registerButton(ItemSelectButton btn) {

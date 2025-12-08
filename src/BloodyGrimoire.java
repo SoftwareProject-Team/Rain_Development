@@ -1,9 +1,6 @@
-import org.openpatch.scratch.KeyCode;
-import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.math.Vector2;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BloodyGrimoire extends WeaponItem {

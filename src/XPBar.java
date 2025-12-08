@@ -1,8 +1,4 @@
 import org.openpatch.scratch.Sprite;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
 
 public class XPBar extends Sprite {
 
