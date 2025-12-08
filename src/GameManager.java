@@ -13,6 +13,10 @@ public class GameManager extends Stage {
     // 설명 이미지 설정
     public static final ArrayList<ItemData> SUPPORT_SLOT = new ArrayList<>();
 
+    public List<Item> ItemSelectable = new ArrayList<>();
+    public List<WeaponItem> WeaponItems = new ArrayList<>();
+    public List<EffectItem> EffectItems = new ArrayList<>();
+
     private ArrayList<ItemSelectButton> buttons = new ArrayList<>();
 
     public static final int ITEMMAX = 5;
@@ -50,7 +54,16 @@ public class GameManager extends Stage {
         this.add(new CycleSythe());
         this.add(new BloodyGrimoire());
 
+        ItemSelectable.add(new FireAxe());
+        ItemSelectable.add(new ThornShooter());
+        ItemSelectable.add(new SwordDance());
+        ItemSelectable.add(new IceGrave());
+        ItemSelectable.add(new BoneStaff());
+        ItemSelectable.add(new CycleSythe());
+        ItemSelectable.add(new BloodyGrimoire());
 
+        WeaponItems = findSpritesOf(WeaponItem.class);
+        EffectItems = findSpritesOf(EffectItem.class);
 
         // 타이머 숫자 5개 생성, 화면에 붙이기
         for (int i = 0; i < 5; i++) {
@@ -82,7 +95,6 @@ public class GameManager extends Stage {
         waveTimer++;
 
         FRAME_TIME = (double)(timer.millis() - lastTime) / 1000;
-        System.out.println(FRAME_TIME);
 
         lastTime = timer.millis();
 
@@ -205,6 +217,7 @@ public class GameManager extends Stage {
         for (ItemData data : slot) {
             if (data.imagePath.equals(imgPath)) {
                 data.level++;
+                for (Item item : ItemSelectable) if (item.name.equals(data.name)) item.levelup();
                 itemSlot.refreshUI();
                 return;
             }
@@ -213,7 +226,15 @@ public class GameManager extends Stage {
         // 없다 → 새로 추가
         if (slot.size() < ITEMMAX) {
             slot.add(new ItemData(type, imgPath, 1));
+            for (Item item : ItemSelectable) if (item.name.equals(type)) item.levelup();
             itemSlot.refreshUI();
+        }
+
+        if (slot.size() == ITEMMAX) {
+            for (Item item : ItemSelectable) {
+                if (item.name.equals(type) && item.level < 5) return;
+                else ItemSelectable.remove(item);;
+            }
         }
 
     }
