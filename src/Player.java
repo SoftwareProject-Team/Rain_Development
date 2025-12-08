@@ -11,7 +11,7 @@ class Player extends Sprite {
 
     public static Player Instance;
 
-    public int exp;
+    public double exp;
     public int hp;
     public int maxHp;
     public int level;
@@ -133,6 +133,14 @@ class Player extends Sprite {
         double dirY = inputY / scalar;
 
         changePosition(new Vector2(dirX * speed * (1 + bonusSpeed) * GameManager.FRAME_TIME, dirY * speed * (1+bonusSpeed) * GameManager.FRAME_TIME));
+        double checkX = getX();
+        double checkY = getY();
+        if(checkX < -390) checkX = -390;
+        if(checkX > 390) checkX = 390;
+        if(checkY < -290) checkY = -290;
+        if(checkY > 290) checkY = 290;
+        setPosition(new Vector2(checkX, checkY));
+
         pos = getPosition();
 
         if(scalar > 0.9) playAnim("Run", 8, 5);
@@ -174,6 +182,10 @@ class Player extends Sprite {
         if(damageTimer < 0) {
             hp -= 1;
             damageTimer = INVINCIBLE_TIME;
+
+            if(hp < 0){
+                GameManager.Instance.exit();
+            }
         }
     }
 }

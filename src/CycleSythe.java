@@ -2,9 +2,16 @@ import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.math.Vector2;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 public class CycleSythe extends WeaponItem{
+    public CycleSythe(String name, String iconPath) {
+        super(name, iconPath);
+    }
+
     class CycleSytheObject extends Sprite {
         public static String path = "sprites/Weapon/CycleSythe/";
 
@@ -42,7 +49,7 @@ public class CycleSythe extends WeaponItem{
             deathTime = 6;
         }
 
-        public static final double HIT_DELAY = 0.1;
+        public static final double HIT_DELAY = 0.2;
         public double hitTimer;
 
         public double distance;
@@ -82,7 +89,7 @@ public class CycleSythe extends WeaponItem{
                     for (Enemy e : enemies) {
                         if (distanceToSprite(e) < hitSize) {
                             e.getDamage(damage);
-                            e.Knockback(2);
+                            e.Knockback(8);
                         }
                     }
                 }

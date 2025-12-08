@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class ItemSlot extends Sprite {
 
     private final int SLOT_SIZE = 50;
-    private final int ICON_SIZE = 30;
+    private final int ICON_SIZE = 35;
     private final int GAP = 10;
 
     public ItemSlot() {
@@ -61,14 +61,14 @@ public class ItemSlot extends Sprite {
 
             if (i < GameManager.WEAPON_SLOT.size()) {
                 try {
-                    ItemData item = GameManager.WEAPON_SLOT.get(i);
-                    BufferedImage img = ImageIO.read(new File(item.imagePath));
+                    Item item = GameManager.WEAPON_SLOT.get(i);
+                    BufferedImage img = ImageIO.read(new File(item.iconPath));
 
                     int offset = (SLOT_SIZE - ICON_SIZE) / 2;
                     g2.drawImage(img, currentX + offset, 10 + offset, ICON_SIZE, ICON_SIZE, null);
 
                     // 레벨 표시
-                    g2.drawString("Lv"+ item.level, currentX, 10 +SLOT_SIZE+GAP);
+                    g2.drawString("Lv "+ item.level, currentX + 14, 10 +SLOT_SIZE+GAP);
 
                 } catch (Exception e) {
                     g2.drawString("X", currentX + 30, 50);
@@ -81,14 +81,14 @@ public class ItemSlot extends Sprite {
 
             if (i < GameManager.SUPPORT_SLOT.size()) {
                 try {
-                    ItemData support = GameManager.SUPPORT_SLOT.get(i);
-                    BufferedImage img = ImageIO.read(new File(support.imagePath));
+                    Item support = GameManager.SUPPORT_SLOT.get(i);
+                    BufferedImage img = ImageIO.read(new File(support.iconPath));
 
                     int offset = (SLOT_SIZE - ICON_SIZE) / 2;
                     g2.drawImage(img, currentX + offset, secondRowY + offset, ICON_SIZE, ICON_SIZE, null);
 
                     // 레벨 표시
-                    g2.drawString("Lv"+support.level, currentX, secondRowY+SLOT_SIZE+GAP);
+                    g2.drawString("Lv "+support.level, currentX  + 14, secondRowY+SLOT_SIZE+GAP);
 
                 } catch (Exception e) {
                     g2.drawString("X", currentX + 30, secondRowY + 40);

@@ -44,33 +44,122 @@ public class Enemy extends Sprite {
         this.data = data;
     }
 
+    public static EnemyData snail = new EnemyData(
+            "snail",
+            8,
+            8,
+            3,
+            15f,
+            1,
+            25
+    );
+
+    public static EnemyData slime = new EnemyData(
+            "slime",
+            6,
+            10,
+            5,
+            20f,
+            2,
+            25
+    );
+
+    public static EnemyData bee = new EnemyData(
+            "bee",
+            4,
+            15,
+            15,
+            30f,
+            5,
+            20
+    );
 
     public static EnemyData boar = new EnemyData(
             "boar",
             8,
             8,
-            100,
-            30f,
-            50,
-            15
+            30,
+            20f,
+            5,
+            25
     );
 
-    public static EnemyData slime = new EnemyData(
+    public static EnemyData flower = new EnemyData(
+            "giantFlower",
+            4,
+            15,
+            150,
+            30f,
+            30,
+            28
+    );
+
+    public static EnemyData redSnail = new EnemyData(
+            "redSnail",
+            8,
+            8,
+            35,
+            40f,
+            3,
+            25
+    );
+
+    public static EnemyData redSlime = new EnemyData(
             "redSlime",
             6,
             10,
             50,
-            20f,
-            10,
+            35f,
+            4,
             25
     );
 
-    public static EnemyData snail = new EnemyData(
+    public static EnemyData redBee = new EnemyData(
+            "redBee",
+            4,
+            15,
+            100,
+            45f,
+            10,
+            20
+    );
+
+    public static EnemyData blackBoar = new EnemyData(
+            "blackBoar",
+            8,
+            8,
+            250,
+            40f,
+            20,
+            25
+    );
+
+    public static EnemyData bat = new EnemyData(
+            "bat",
+            5,
+            15,
+            450,
+            80f,
+            200,
+            28
+    );
+
+    public static EnemyData poisonFlower = new EnemyData(
+            "poisonGiantFlower",
+            4,
+            15,
+            700,
+            55f,
+            200,
+            28
+    );
+
+    public static EnemyData undead = new EnemyData(
             "snail",
             8,
-            8,
-            25,
-            30f,
+            4,
+            999999999,
+            150f,
             1,
             25
     );
@@ -133,6 +222,8 @@ public class Enemy extends Sprite {
     }
 
     public void Knockback(double multiplier){
+        if(!state) return;
+
         move(multiplier * -1 * GameManager.FRAME_TIME * data.speed);
     }
 
@@ -142,11 +233,11 @@ public class Enemy extends Sprite {
     }
 
     public void setPosition() {
-        this.setX((Math.random() - 0.5) * 800); // 오른쪽 끝
-        this.setY((Math.random() - 0.5) * 600); // 위아래 랜덤 위치
+        this.setX((Math.random() - 0.5) * 780); // 오른쪽 끝
+        this.setY((Math.random() - 0.5) * 580); // 위아래 랜덤 위치
         do {
-            this.setX((Math.random() - 0.5) * 800);
-            this.setY((Math.random() - 0.5) * 600);
+            this.setX((Math.random() - 0.5) * 780);
+            this.setY((Math.random() - 0.5) * 580);
         } while(distanceToSprite(Player.Instance) < 150);
     }
 

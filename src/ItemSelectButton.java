@@ -9,10 +9,12 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 public class ItemSelectButton extends Sprite {
+    private Item item;
+
     private String itemName;
     private String itemImgPath;
     private String descImgPath;
-    private String type;
+
     private static final Map<String, String> TEXTURE_CACHE = new HashMap<>();
     // 아이템 이미지 설정
     private static final Map<String, Object> ITEM_CONFIG = new LinkedHashMap<>();
@@ -22,23 +24,26 @@ public class ItemSelectButton extends Sprite {
         // 아이템 이미지 값 설정
         ITEM_CONFIG.put("width", 80);
         ITEM_CONFIG.put("height", 80);
-        ITEM_CONFIG.put("y", 30);
+        ITEM_CONFIG.put("y", 20);
         ITEM_CONFIG.put("arc", 20);
         ITEM_CONFIG.put("borderColor", Color.BLACK);
 
         // 설명 이미지 값 설정
-        DESC_CONFIG.put("width", 140);
-        DESC_CONFIG.put("height", 100);
-        DESC_CONFIG.put("y", 160);
+        DESC_CONFIG.put("width", 270);
+        DESC_CONFIG.put("height", 360);
+        DESC_CONFIG.put("y", -20);
         DESC_CONFIG.put("arc", 20);
         DESC_CONFIG.put("borderColor", Color.BLACK);
     }
-    public ItemSelectButton(int x, int y, String type, String name, String itemImgPath, String descImgPath) {
+
+    public ItemSelectButton(int x, int y, Item item) {
         GameManager.Instance.GamePause();
-        this.itemName = name;
-        this.itemImgPath = itemImgPath;
-        this.descImgPath = descImgPath;
-        this.type = type;
+
+        this.item = item;
+
+        this.itemName = item.name;
+        this.itemImgPath = item.iconPath;
+        this.descImgPath = item.descriptPath;
 
         // 위치 설정
         this.setX(x);
@@ -48,20 +53,20 @@ public class ItemSelectButton extends Sprite {
         try {
             String finalPath;
 
-            if (TEXTURE_CACHE.containsKey(name)) {
-                finalPath = TEXTURE_CACHE.get(name);
+            if (TEXTURE_CACHE.containsKey(itemName)) {
+                finalPath = TEXTURE_CACHE.get(itemName);
             }
             else {
-                BufferedImage buttonSkin = drawButtonSkin(name, itemImgPath, descImgPath);
-                File tempFile = File.createTempFile("temp_btn_" + name, ".png");
+                BufferedImage buttonSkin = drawButtonSkin(itemName, itemImgPath, descImgPath);
+                File tempFile = File.createTempFile("temp_btn_" + itemName, ".png");
                 ImageIO.write(buttonSkin, "png", tempFile);
                 tempFile.deleteOnExit();
                 finalPath = tempFile.getAbsolutePath();
-                TEXTURE_CACHE.put(name, finalPath);
+                TEXTURE_CACHE.put(itemName, finalPath);
             }
 
-            this.addCostume(name, finalPath);
-            this.switchCostume(name);
+            this.addCostume(itemName, finalPath);
+            this.switchCostume(itemName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -114,14 +119,6 @@ public class ItemSelectButton extends Sprite {
             g2.drawImage(img1, itemX, itemY, itemW, itemH, null);
         } catch (Exception e) { g2.drawString("Img1 Error", itemX, itemY + 20); }
 
-        // 텍스트
-        g2.setColor(Color.BLACK);
-        g2.setFont(new Font("Malgun Gothic", Font.BOLD, 18));
-        FontMetrics fm = g2.getFontMetrics();
-        int textX = (w - fm.stringWidth(text)) / 2;
-
-        // 텍스트 위치도 아이템과 설명 사이 적절한 곳으로 조정하고 싶다면 변수화 가능
-        g2.drawString(text, textX, 140);
 
         try {
             BufferedImage img2 = ImageIO.read(new File(path2));
@@ -134,8 +131,9 @@ public class ItemSelectButton extends Sprite {
 
     @Override
     public void whenClicked() {
+        System.out.println(item.name);
         GameManager.Instance.GamePlay();
-        GameManager.Instance.addItem(GameManager.WEAPON_SLOT,type,itemImgPath);
+        GameManager.Instance.addItem(item);
         GameManager.Instance.hideOtherButtons();
     }
 }
