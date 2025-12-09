@@ -1,9 +1,6 @@
 import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
-import org.openpatch.scratch.extensions.math.Vector2;
 import org.openpatch.scratch.extensions.timer.Timer;
-import org.openpatch.scratch.KeyCode;
-import java.util.List;
 
 public class Enemy extends Sprite {
 

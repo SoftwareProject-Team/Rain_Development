@@ -1,11 +1,7 @@
-import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.math.Vector2;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Set;
 
 public class CycleSythe extends WeaponItem{
     public CycleSythe(String name, String iconPath) {

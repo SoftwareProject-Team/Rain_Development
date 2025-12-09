@@ -131,7 +131,7 @@ public class ItemSelectButton extends Sprite {
 
     @Override
     public void whenClicked() {
-        System.out.println(item.name);
+        // System.out.println(item.name);
         GameManager.Instance.GamePlay();
         GameManager.Instance.addItem(item);
         GameManager.Instance.hideOtherButtons();

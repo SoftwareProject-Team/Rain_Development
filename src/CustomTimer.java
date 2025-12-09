@@ -1,6 +1,3 @@
-import org.openpatch.scratch.internal.Applet;
-
-
 public class CustomTimer {
     private int startMillisEvery = -1;
     private int startMillisFor = -1;

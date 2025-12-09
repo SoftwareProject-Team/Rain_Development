@@ -1,7 +1,5 @@
-import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.math.Vector2;
 import java.util.List;
-import java.util.Random;
 
 public class BoneStaff extends WeaponItem{
     public BoneStaff(String name, String iconPath) {

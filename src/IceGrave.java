@@ -1,10 +1,8 @@
-import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.math.Vector2;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class IceGrave extends WeaponItem{
     public IceGrave(String name, String iconPath) {

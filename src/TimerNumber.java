@@ -65,6 +65,8 @@ public class TimerNumber extends Sprite {
             digit = (int) (time % 60) % 10; // 초의 일의 자리
         }
 
+        // if (time <= 0) GameManager.Instance.exit();
+
         this.switchCostume("number" + digit);
     }
 

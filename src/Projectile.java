@@ -1,5 +1,3 @@
-import org.openpatch.scratch.KeyCode;
-import org.openpatch.scratch.RotationStyle;
 import org.openpatch.scratch.Sprite;
 import org.openpatch.scratch.extensions.math.Vector2;
 
