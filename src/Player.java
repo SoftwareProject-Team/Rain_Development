@@ -43,8 +43,8 @@ class Player extends Sprite {
     public int frameTimer;
 
     //피격
-    public static final int INVINCIBLE_TIME = 2;
-    public int damageTimer;
+    public static final double INVINCIBLE_TIME = 0.05;
+    public double damageTimer;
 
     Player() {
         GameManager.AddCostumes(this, path, "Idle", 2);
@@ -78,7 +78,7 @@ class Player extends Sprite {
         bonusMagnetRange = 0;
 
 
-        speed = 80;
+        speed = 60;
         hp = 100;
         maxHp = 100;
         exp = 0;
@@ -194,7 +194,7 @@ class Player extends Sprite {
     }
 
     public void cooldown(){
-        damageTimer--;
+        damageTimer-=GameManager.FRAME_TIME;
     }
 
     public void getDamage() {

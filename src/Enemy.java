@@ -156,9 +156,9 @@ public class Enemy extends Sprite {
             8,
             4,
             999999999,
-            150f,
+            200f,
             1,
-            25
+            60
     );
 
 
@@ -187,7 +187,7 @@ public class Enemy extends Sprite {
 
     protected void Move() {
         pointTowardsSprite(Player.Instance);
-        move(40 * GameManager.FRAME_TIME);
+        move(data.speed * GameManager.FRAME_TIME);
     }
 
     protected void Animation() {
@@ -220,8 +220,9 @@ public class Enemy extends Sprite {
 
     public void Knockback(double multiplier){
         if(!state) return;
+        if(data.hp > 100000) return;
 
-        move(multiplier * -1 * GameManager.FRAME_TIME * data.speed);
+        move(multiplier * -1 * GameManager.FRAME_TIME * 20);
     }
 
     private void Die() {
@@ -250,6 +251,7 @@ public class Enemy extends Sprite {
         GameManager.AddCostumes(this, path, data.anim, data.frameCount);
         addCostume("spawn", path+"spawn.png");
         setSize(75);
+        if(data.hp > 100000) setSize(225);
 
         frame = 1;
         frameTimer = 0;

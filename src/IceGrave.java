@@ -65,7 +65,7 @@ public class IceGrave extends WeaponItem{
                     if(distanceToSprite(e) < hitSize && !alreadyHit.contains(e)) {
                         e.getDamage(damage);
                         alreadyHit.add(e);
-                        e.Knockback(30);
+                        e.Knockback(20);
 
                     }
                 }

@@ -112,7 +112,7 @@ public class BloodyGrimoire extends WeaponItem {
                     for (Enemy e : enemies) {
                         if (distanceToSprite(e) < hitSize) {
                             e.getDamage(damage);
-                            e.Knockback(3);
+                            e.Knockback(1);
                         }
                     }
                 }

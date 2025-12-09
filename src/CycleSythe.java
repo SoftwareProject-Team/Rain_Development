@@ -85,7 +85,7 @@ public class CycleSythe extends WeaponItem{
                     for (Enemy e : enemies) {
                         if (distanceToSprite(e) < hitSize) {
                             e.getDamage(damage);
-                            e.Knockback(8);
+                            e.Knockback(4);
                         }
                     }
                 }
