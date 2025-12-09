@@ -75,7 +75,7 @@ public class ThornShooter extends WeaponItem{
     public static final double HIT_SIZE = 15;
 
     public static final double[] damage = new double[] { 3, 6, 9, 12, 15 };
-    public static final double[] attackDelay = new double[] { 0.8, 0.55, 0.4, 0.25, 0.1 };
+    public static final double[] attackDelay = new double[] { 0.8, 0.55, 0.4, 0.25, 0.15 };
     public static final int size = 100;
 
     public double attackTimer;

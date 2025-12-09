@@ -156,7 +156,7 @@ public class GameManager extends Stage {
     void Wave(){
         switch (waveState) {
             case 0:
-                if(waveTimer1.everyMillis(400)) {
+                if(waveTimer1.everyMillis(600)) {
                     this.add(new Enemy(Enemy.snail));
                 }
 
@@ -169,17 +169,17 @@ public class GameManager extends Stage {
                     {
                         this.add(new Enemy(Enemy.snail));
                     }
-                    for (int i = 0; i < 6; i++)
+                    for (int i = 0; i < 4; i++)
                     {
                         this.add(new Enemy(Enemy.slime));
                     }
                 }
                 break;
             case 1:
-                if(waveTimer1.everyMillis(500)) {
+                if(waveTimer1.everyMillis(600)) {
                     this.add(new Enemy(Enemy.snail));
                 }
-                if(waveTimer2.everyMillis(700)) {
+                if(waveTimer2.everyMillis(800)) {
                     this.add(new Enemy(Enemy.slime));
                 }
 
@@ -187,18 +187,18 @@ public class GameManager extends Stage {
                     ResetWaveTimer();
                     waveState = 2;
 
-                    for (int i = 0; i < 9; i++)
+                    for (int i = 0; i < 7; i++)
                     {
                         this.add(new Enemy(Enemy.slime));
                     }
-                    for (int i = 0; i < 12; i++)
+                    for (int i = 0; i < 9; i++)
                     {
                         this.add(new Enemy(Enemy.snail));
                     }
                 }
                 break;
             case 2:
-                if(waveTimer1.everyMillis(400)) {
+                if(waveTimer1.everyMillis(600)) {
                     this.add(new Enemy(Enemy.slime));
                 }
                 if(waveTimer2.everyMillis(3000)) {
@@ -592,10 +592,15 @@ public class GameManager extends Stage {
                     ResetWaveTimer();
                     waveState = 16;
 
-                    for (int i = 0; i < 30; i++)
+                    for (int i = 0; i < 2; i++)
                     {
                         this.add(new Enemy(Enemy.undead));
                     }
+                }
+                break;
+            case 16:
+                if(waveTimer1.everyMillis(10000)) {
+                    this.add(new Enemy(Enemy.undead));
                 }
                 break;
         }

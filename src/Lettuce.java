@@ -9,6 +9,6 @@ public class Lettuce extends EffectItem {
     void levelup() {
         super.levelup();
         Player.Instance.bonusMaxHp = hp[level-1];
-        Player.Instance.Heal(1);
+        Player.Instance.Heal(0.3);
     }
 }

@@ -54,7 +54,7 @@ public class FireAxe extends WeaponItem{
                     for (Enemy e : enemies) {
                         if (distanceToSprite(e) < hitSize) {
                             e.getDamage(damage);
-                            e.Knockback(5);
+                            e.Knockback(2);
                         }
                     }
                 }
@@ -73,7 +73,7 @@ public class FireAxe extends WeaponItem{
         level = 0; //임시 레벨 설정
     }
 
-    public static final double HIT_SIZE = 15;
+    public static final double HIT_SIZE = 12;
 
     public static final double[] damage = new double[] { 2, 4, 6, 8, 11 };
     public static final double[] attackSize = new double[] { 250, 270, 300, 340, 390 };
@@ -97,8 +97,8 @@ public class FireAxe extends WeaponItem{
 
             for (int i = 0; i < atkCount; i++) {
                 // 시작 각과 끝 각 지정 (예: 3개는 -20~20, 4개는 -30~30)
-                double startAngle = baseAngle + -10 * (atkCount - 1);
-                double angle = startAngle + (i * 20);
+                double startAngle = baseAngle + -5 * (atkCount - 1);
+                double angle = startAngle + (i * 10);
 
                 GameManager.Instance.add(new FireAxePP(
                         angle,
