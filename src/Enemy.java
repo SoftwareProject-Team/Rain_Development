@@ -187,7 +187,7 @@ public class Enemy extends Sprite {
 
     protected void Move() {
         pointTowardsSprite(Player.Instance);
-        move(data.speed * GameManager.FRAME_TIME);
+        move(40 * GameManager.FRAME_TIME);
     }
 
     protected void Animation() {
