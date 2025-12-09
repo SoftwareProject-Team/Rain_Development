@@ -584,7 +584,7 @@ public class GameManager extends Stage {
                 if(waveTimer1.everyMillis(700)) {
                     this.add(new Enemy(Enemy.bat));
                 }
-                if(waveTimer1.everyMillis(800)) {
+                if(waveTimer2.everyMillis(800)) {
                     this.add(new Enemy(Enemy.poisonFlower));
                 }
 
@@ -703,6 +703,9 @@ public class GameManager extends Stage {
         }
         else if(picked.size() == 1) {
             this.add(new ItemSelectButton(0, 0, picked.get(0)));
+        }
+        else {
+            Player.Instance.Heal(0.2);
         }
     }
 

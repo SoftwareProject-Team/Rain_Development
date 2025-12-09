@@ -12,8 +12,8 @@ class Player extends Sprite {
     public static Player Instance;
 
     public double exp;
-    public int hp;
-    public int maxHp;
+    public double hp;
+    public double maxHp;
     public int level;
     public Vector2 pos;
 
@@ -25,7 +25,7 @@ class Player extends Sprite {
     public double   bonusDamage;
     public double   bonusAttackSize;
     public double   bonusSpeed;
-    public int      bonusMaxHp;
+    public double   bonusMaxHp;
     public int      bonusProjectile;
     public double   bonusExp;
     public int      bonusMagnetRange;
@@ -78,7 +78,7 @@ class Player extends Sprite {
         bonusMagnetRange = 0;
 
 
-        speed = 60;
+        speed = 80;
         hp = 100;
         maxHp = 100;
         exp = 0;
@@ -98,7 +98,26 @@ class Player extends Sprite {
         animation();
         cooldown();
 
+        continuousHeal();
+
         checkNearestEnemy();
+    }
+
+    double healDelay;
+
+    void continuousHeal(){
+        healDelay -= GameManager.FRAME_TIME;
+        if(healDelay < 0){
+            healDelay = 3;
+
+            Heal(0.01);
+
+        }
+    }
+
+    public void Heal(double amount){
+        hp += (maxHp + bonusMaxHp) * amount;
+        if(hp > (maxHp + bonusMaxHp)) hp = (maxHp + bonusMaxHp);
     }
 
     public Enemy nearestEnemy;

@@ -25,7 +25,7 @@ public class HPBar extends Sprite {
         }
 
         double currentHP = player.hp;
-        double maxHP = player.maxHp;
+        double maxHP = player.maxHp + player.bonusMaxHp;
 
         if (currentHP < 0) {
             this.switchCostume("50");
