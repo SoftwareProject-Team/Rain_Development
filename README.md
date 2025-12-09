@@ -78,3 +78,8 @@
     - Controls timer and logic for summoning mobs based on time
     - Configures settings like summoning entity, mob name, health, speed, frame count, frame delay variable, etc.
     - Sends a signal to the enemy to summon the mob
+
+# Connecting an External Drive
+1. Launch IntelliJ
+2. Verify the libs folder (scratch-4.24.2-all)
+3. File → Project Structure → Click the + icon → Click Connect JAR or Directory → Click scratch-4.24.2-all within the libs folder → Click OK → Apply
